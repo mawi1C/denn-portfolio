@@ -16,6 +16,7 @@ export default function AskMeAnything() {
     { label: 'internship experience', query: 'tell me about your workflow at the psa' }
   ]
 
+  // 1. Keyboard Shortcuts (Toggle with Cmd/Ctrl+K, close with Esc)
   useEffect(() => {
     const handleKeyDown = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
@@ -28,13 +29,28 @@ export default function AskMeAnything() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  // Auto-scroll chat view as content updates
+  // 2. Background Scroll Lock
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+
+    // Cleanup ensures scroll is restored if component unmounts while open
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
+  // 3. Auto-scroll chat view as content updates
   useEffect(() => {
     if (logEndRef.current) {
       logEndRef.current.scrollIntoView({ behavior: 'smooth' })
     }
   }, [chatLog, isAnalyzing])
 
+  // 4. Focus input when drawer opens
   useEffect(() => {
     if (isOpen) setTimeout(() => inputRef.current?.focus(), 100)
   }, [isOpen])
@@ -81,8 +97,9 @@ export default function AskMeAnything() {
 
       {/* Sidebar Panel Drawer Container */}
       <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-[440px] bg-white dark:bg-gray-950 border-l border-gray-100 dark:border-white/5 z-50 transform transition-transform duration-300 ease-out ${isOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
+        className={`fixed top-0 right-0 h-full w-full sm:w-[440px] bg-white dark:bg-gray-950 border-l border-gray-100 dark:border-white/5 z-50 transform transition-transform duration-300 ease-out ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
       >
         <div className="flex flex-col h-full p-6 sm:p-8">
           {/* Header Action Row */}
@@ -161,16 +178,11 @@ export default function AskMeAnything() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               disabled={isAnalyzing}
-              /* 
-                FIX: Changed 'text-xs' to 'text-base sm:text-xs'. 
-                This makes it 16px on mobile (preventing iOS zoom) 
-                and drops it back down to 12px (text-xs) on desktop.
-              */
               className="w-full bg-transparent text-gray-900 dark:text-white font-mono text-base sm:text-xs placeholder-gray-400 dark:placeholder-gray-600 outline-none disabled:opacity-50 py-1"
             />
           </form>
         </div>
-      </div >
+      </div>
     </>
   )
 }
