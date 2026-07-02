@@ -153,7 +153,7 @@ export default function AskMeAnything() {
           </div>
 
           {/* Interactive Core Form Input Tray */}
-          <form onSubmit={handleAsk} className="mt-6 pt-4 border-t border-gray-200 dark:border-white/10">
+          <form onSubmit={handleAsk} className="mt-4 pt-4 pb-2 border-t border-gray-200 dark:border-white/10">
             <input
               ref={inputRef}
               type="text"
@@ -161,11 +161,16 @@ export default function AskMeAnything() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               disabled={isAnalyzing}
-              className="w-full bg-transparent text-gray-900 dark:text-white font-mono text-xs placeholder-gray-400 dark:placeholder-gray-600 outline-none disabled:opacity-50"
+              /* 
+                FIX: Changed 'text-xs' to 'text-base sm:text-xs'. 
+                This makes it 16px on mobile (preventing iOS zoom) 
+                and drops it back down to 12px (text-xs) on desktop.
+              */
+              className="w-full bg-transparent text-gray-900 dark:text-white font-mono text-base sm:text-xs placeholder-gray-400 dark:placeholder-gray-600 outline-none disabled:opacity-50 py-1"
             />
           </form>
         </div>
-      </div>
+      </div >
     </>
   )
 }
