@@ -29,17 +29,23 @@ export default function AskMeAnything() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  // 2. Background Scroll Lock
+  // 2. iOS-Safe Background Scroll Lock
   useEffect(() => {
     if (isOpen) {
+      // iOS requires locking both html and body to truly stop scrolling
+      document.documentElement.style.overflow = 'hidden'
       document.body.style.overflow = 'hidden'
+      document.body.style.overscrollBehavior = 'none' // Prevents bounce effect
     } else {
+      document.documentElement.style.overflow = ''
       document.body.style.overflow = ''
+      document.body.style.overscrollBehavior = ''
     }
 
-    // Cleanup ensures scroll is restored if component unmounts while open
     return () => {
+      document.documentElement.style.overflow = ''
       document.body.style.overflow = ''
+      document.body.style.overscrollBehavior = ''
     }
   }, [isOpen])
 
@@ -76,7 +82,7 @@ export default function AskMeAnything() {
 
   return (
     <>
-      {/* Floating Action Button - Fixed to work on mobile too */}
+      {/* Floating Action Button */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
@@ -90,14 +96,16 @@ export default function AskMeAnything() {
       {/* Backdrop overlay filter */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-white/60 dark:bg-black/40 backdrop-blur-md z-40"
+          className="fixed inset-0 bg-white/60 dark:bg-black/40 backdrop-blur-md z-40 touch-none"
           onClick={() => setIsOpen(false)}
+          onTouchMove={(e) => e.preventDefault()} // Stops scroll-bleed on mobile
         />
       )}
 
       {/* Sidebar Panel Drawer Container */}
+      {/* FIXED: Changed h-full to h-[100dvh] so it resizes properly when iOS keyboard opens */}
       <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-[440px] bg-white dark:bg-gray-950 border-l border-gray-100 dark:border-white/5 z-50 transform transition-transform duration-300 ease-out ${
+        className={`fixed top-0 right-0 h-[100dvh] w-full sm:w-[440px] bg-white dark:bg-gray-950 border-l border-gray-100 dark:border-white/5 z-50 transform transition-transform duration-300 ease-out flex flex-col ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -170,7 +178,7 @@ export default function AskMeAnything() {
           </div>
 
           {/* Interactive Core Form Input Tray */}
-          <form onSubmit={handleAsk} className="mt-4 pt-4 pb-2 border-t border-gray-200 dark:border-white/10">
+          <form onSubmit={handleAsk} className="mt-4 pt-4 pb-2 border-t border-gray-200 dark:border-white/10 shrink-0">
             <input
               ref={inputRef}
               type="text"
