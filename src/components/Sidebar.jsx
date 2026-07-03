@@ -28,9 +28,9 @@ export default function Sidebar() {
   ]
 
   const navItems = [
-    { to: '/skills', icon: Code2, label: 'Skills', index: '01' },
-    { to: '/projects', icon: FolderGit2, label: 'Projects', index: '02' },
-    { to: '/experience', icon: Briefcase, label: 'Experience', index: '03' },
+    { to: '/projects', icon: FolderGit2, label: 'Projects', index: '01' },
+    { to: '/experience', icon: Briefcase, label: 'Experience', index: '02' },
+    { to: '/skills', icon: Code2, label: 'Stack', index: '03' },
     { to: '/certificates', icon: Award, label: 'Certificates', index: '04' },
     { to: '/chat', icon: MessageCircle, label: 'Chat', index: '05' },
   ]
@@ -167,12 +167,15 @@ export default function Sidebar() {
           For work &amp; freelance, reach me at
         </p>
 
-        <a href="mailto:denjohncabria@gmail.com"
+        {/* Changed from <a> to <Link> to navigate to the contact route */}
+        <Link
+          to="/contactform"
+          onClick={() => setIsOpen(false)} // Closes mobile menu if open
           className="flex items-center gap-2 text-[10px] font-mono font-bold text-gray-900 dark:text-white border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 shadow-sm hover:shadow-md hover:border-gray-300 dark:hover:border-white/20 transition-all"
         >
           <Mail size={15} className="flex-shrink-0" />
           <span className="truncate">denjohncabria@gmail.com</span>
-        </a>
+        </Link>
       </div>
     </div>
   )

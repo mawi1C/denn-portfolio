@@ -29,7 +29,7 @@ export default function BinaryPattern() {
     <div
       aria-hidden="true"
       className="pointer-events-none select-none fixed top-0 right-0 hidden md:block
-                 w-[260px] h-[200px] lg:w-[320px] lg:h-[240px]"
+                 w-[260px] h-[200px] lg:w-[260px] lg:h-[180px]"
       style={{
         WebkitMaskImage:
           'linear-gradient(225deg, black 0%, black 30%, transparent 78%)',

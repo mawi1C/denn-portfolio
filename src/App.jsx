@@ -10,6 +10,7 @@ import AskMeAnything from './components/AskMeAnything'
 import TypingTest from './components/TypingTest'
 import { useScrollToHash } from './hooks/useScrollToHash'
 import CertificatesPage from './pages/CertificatesPage'
+import ContactPage from './pages/ContactPage';
 
 function App() {
   useScrollToHash()
@@ -39,6 +40,7 @@ function App() {
         <Route path="/experience" element={<ExperiencePage />} />
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/certificates" element={<CertificatesPage />} />
+        <Route path="/contactform" element={<ContactPage />} />
       </Routes>
 
       <AskMeAnything />

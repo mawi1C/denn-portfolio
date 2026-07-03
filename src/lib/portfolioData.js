@@ -2,9 +2,15 @@
 import typoTerrorLogo from '../assets/typo-terror.webp'
 import quaestioLogo from '../assets/quaestio.png'
 import pawfindLogo from '../assets/pawfind.png'
+import bitscon2024Img from '../assets/bitscon-2024.png' 
+import bitscon2023Img from '../assets/bitscon-2023.jpg'
 
-export const languagesFrameworks = ['JavaScript', 'TypeScript', 'PHP', 'React', 'React Native', 'Node.js', 'Laravel', 'CodeIgniter', 'MySQL', 'Tailwind CSS']
-export const softwareTools = ['VS Code', 'Figma', 'XAMPP', 'Vercel', 'Firebase', 'GitHub', 'Microsoft Office']
+export const languagesFrameworks = ['JavaScript', 'TypeScript', 'PHP', 'React', 'React Native', 'Node.js', 'Laravel', 'CodeIgniter', 'Tailwind CSS']
+
+export const databasesBackend = ['Supabase', 'Firebase', 'MySQL', 'Cloudinary']
+
+export const softwareTools = ['VS Code', 'Figma', 'XAMPP', 'Vercel', 'GitHub', 'Microsoft Office']
+
 export const technicalSkills = ['Web & Mobile Development', 'Database Design', 'Cloud Integration', 'API Development', 'Version Control (Git)']
 
 export const projects = [
@@ -38,7 +44,7 @@ export const projects = [
     title: 'PawFind — AI-Based Pet Search Mobile App',
     tag: 'CAPSTONE PROJECT',
     date: '2025 – 2026',
-    link: 'https://pawfindapp.vercel.app/', // <-- Added your live Vercel link here!
+    link: 'https://pawfindapp.vercel.app/', 
     featured: true,
     logo: pawfindLogo,
     points: [
@@ -79,7 +85,7 @@ export const projects = [
       'Delivered a real-world business solution using modern web technologies',
     ],
   },
- ]
+]
 
 export const experience = [
   {
@@ -93,4 +99,20 @@ export const experience = [
       'Collaborated with supervisors and colleagues to ensure data integrity and timely submission',
     ],
   },
+]
+
+// Real BITSCON Credentials
+export const certificates = [
+  {
+    title: "Certificate of Appreciation — BITSCON 2024",
+    issuer: "Camarines Norte State College / CODITE Region V",
+    date: "Apr 25–26, 2024",
+    link: bitscon2024Img
+  },
+  {
+    title: "Certificate of Appreciation — BITSCON 2023",
+    issuer: "Council of Deans for IT Education / CHED Region V",
+    date: "Feb 23, 2023",
+    link: bitscon2023Img
+  }
 ]

@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
 import TechMarquee from '../components/TechMarquee'
 import CommunityChat from '../components/CommunityChat'
-import { Mail, Phone, ExternalLink, UserRound, Code2, FolderGit2, Briefcase } from 'lucide-react'
+import { Mail, Phone, ExternalLink, UserRound, Code2, FolderGit2, Briefcase, Award } from 'lucide-react'
 import profileImg from '../assets/profile.jpg'
 // 1. Import your CV file here
-import cvFile from '../assets/denjohn_cv.pdf' 
-import { languagesFrameworks, projects, experience } from '../lib/portfolioData'
+import cvFile from '../assets/denjohn_cv.pdf'
+import { languagesFrameworks, projects, experience, certificates } from '../lib/portfolioData'
 import ProfilePhoto from '../components/ProfilePhoto'
 import SectionIcon from '../components/SectionIcon'
 
@@ -18,8 +18,6 @@ export default function Home() {
     return (
         <>
             <section id="hero" className="min-h-screen flex flex-col justify-center items-center sm:items-start text-center sm:text-left">
-                <p className="text-xs font-mono text-gray-400 dark:text-gray-600 mb-6">01 — hero</p>
-
                 <div className="flex flex-col sm:flex-row sm:items-end items-center gap-6 sm:gap-8 mb-6">
                     <div className="relative flex-shrink-0">
                         <span className="absolute -top-2 -left-2 w-4 h-4 border-t border-l border-gray-300 dark:border-white/20 z-10" />
@@ -81,7 +79,7 @@ export default function Home() {
 
             {/* About */}
             <section id="about" className="relative overflow-hidden py-20 border-t border-gray-200 dark:border-white/10">
-                <p className="text-xs font-mono text-gray-400 dark:text-gray-600 mb-2">02 — about</p>
+                <p className="text-xs font-mono text-gray-400 dark:text-gray-600 mb-2">00 — about</p>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight">about</h2>
                 <p className="text-gray-700 dark:text-gray-300 max-w-xl leading-relaxed mb-4">
                     An Information Technology graduate with hands-on experience in web and mobile
@@ -100,30 +98,10 @@ export default function Home() {
                 <SectionIcon icon={UserRound} />
             </section>
 
-            {/* Skills preview */}
-            <section id="skills" className="relative overflow-hidden py-20 border-t border-gray-200 dark:border-white/10">
-                <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs font-mono text-gray-400 dark:text-gray-600">03 — skills</p>
-                    <Link to="/skills" className="text-xs font-mono text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition underline underline-offset-2">
-                        view all →
-                    </Link>
-                </div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight">tech stack</h2>
-                <div className="flex flex-wrap gap-2">
-                    {languagesFrameworks.slice(0, 8).map((s) => (
-                        <span key={s} className="text-xs font-mono border border-gray-200 dark:border-white/10 rounded-full px-3 py-1.5 text-gray-600 dark:text-gray-300">
-                            {s}
-                        </span>
-                    ))}
-                </div>
-
-                <SectionIcon icon={Code2} />
-            </section>
-
             {/* Projects preview */}
             <section id="projects" className="relative py-20 border-t border-gray-200 dark:border-white/10 overflow-hidden">
                 <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs font-mono text-gray-400 dark:text-gray-600">04 — projects</p>
+                    <p className="text-xs font-mono text-gray-400 dark:text-gray-600">01 — projects</p>
                     <Link to="/projects" className="text-xs font-mono text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition underline underline-offset-2">
                         view all →
                     </Link>
@@ -201,8 +179,8 @@ export default function Home() {
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className={`w-full inline-flex items-center justify-center gap-1 text-[11px] font-mono border py-2.5 rounded-xl shadow-sm transition-all duration-300 font-medium ${index === 1
-                                                        ? 'bg-gray-950 text-white border-transparent hover:bg-gray-800 dark:bg-white dark:text-gray-950 dark:hover:bg-gray-100'
-                                                        : 'border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 bg-gray-50/50 dark:bg-transparent hover:bg-gray-950 hover:text-white dark:hover:bg-white dark:hover:text-gray-950'
+                                                    ? 'bg-gray-950 text-white border-transparent hover:bg-gray-800 dark:bg-white dark:text-gray-950 dark:hover:bg-gray-100'
+                                                    : 'border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 bg-gray-50/50 dark:bg-transparent hover:bg-gray-950 hover:text-white dark:hover:bg-white dark:hover:text-gray-950'
                                                     }`}
                                             >
                                                 {isPlayStore ? 'get app' : 'launch app'}{' '}
@@ -222,11 +200,11 @@ export default function Home() {
 
                 <SectionIcon icon={FolderGit2} />
             </section>
-            
+
             {/* Experience preview */}
             <section id="experience" className="relative overflow-hidden py-20 border-t border-gray-200 dark:border-white/10">
                 <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs font-mono text-gray-400 dark:text-gray-600">05 — experience</p>
+                    <p className="text-xs font-mono text-gray-400 dark:text-gray-600">02 — experience</p>
                     <Link to="/experience" className="text-xs font-mono text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition underline underline-offset-2">
                         view all →
                     </Link>
@@ -247,16 +225,80 @@ export default function Home() {
                 <SectionIcon icon={Briefcase} />
             </section>
 
+            {/* Skills preview */}
+            <section id="skills" className="relative overflow-hidden py-20 border-t border-gray-200 dark:border-white/10">
+                <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs font-mono text-gray-400 dark:text-gray-600">03 — stack</p>
+                    <Link to="/skills" className="text-xs font-mono text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition underline underline-offset-2">
+                        view all →
+                    </Link>
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight">tech stack</h2>
+                <div className="flex flex-wrap gap-2">
+                    {languagesFrameworks.slice(0, 8).map((s) => (
+                        <span key={s} className="text-xs font-mono border border-gray-200 dark:border-white/10 rounded-full px-3 py-1.5 text-gray-600 dark:text-gray-300">
+                            {s}
+                        </span>
+                    ))}
+                </div>
+
+                <SectionIcon icon={Code2} />
+            </section>
+
+            {/* Certificates */}
+            <section id="certificates" className="relative overflow-hidden py-20 border-t border-gray-200 dark:border-white/10">
+                <div className="relative z-10">
+                    <div className="flex items-center justify-between mb-2">
+                        <p className="text-xs font-mono text-gray-400 dark:text-gray-600">04 — certificates</p>
+                        {/* Standardized view all router link */}
+                        <Link to="/certificates" className="text-xs font-mono text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition underline underline-offset-2">
+                            view all →
+                        </Link>
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight">certificates & awards</h2>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-w-3xl">
+                        {certificates && certificates.slice(0, 4).map((c) => (
+                            <a
+                                key={c.title}
+                                href={c.link || '#'}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group relative block border border-gray-200 dark:border-white/10 rounded-2xl p-4 bg-white/50 dark:bg-gray-950/40 backdrop-blur-sm hover:bg-gray-50 dark:hover:bg-white/[0.02] hover:border-gray-400 dark:hover:border-white/30 transition-all duration-300 cursor-pointer"
+                            >
+                                <div className="flex items-start justify-between gap-4">
+                                    <div className="space-y-0.5">
+                                        <h3 className="font-medium text-sm text-gray-900 dark:text-white tracking-tight leading-tight group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
+                                            {c.title}
+                                        </h3>
+                                        <p className="text-xs font-mono text-gray-400 dark:text-gray-500">
+                                            {c.issuer} · {c.date}
+                                        </p>
+                                    </div>
+
+                                    {/* Decorative icon container inheriting group hover parameters */}
+                                    <div className="text-gray-400 dark:text-gray-600 group-hover:text-gray-900 dark:hover:text-white transition-colors pt-0.5">
+                                        <ExternalLink size={13} />
+                                    </div>
+                                </div>
+                            </a>
+                        ))}
+                    </div>
+                </div>
+
+                <SectionIcon icon={Award} />
+            </section>
+
             {/* Closing CTA */}
             <section id="closing" className="relative overflow-hidden py-24 border-t border-gray-200 dark:border-white/10 text-center sm:text-left">
-                <p className="text-xs font-mono text-gray-400 dark:text-gray-600 mb-6">07 — closing</p>
+                <p className="text-xs font-mono text-gray-400 dark:text-gray-600 mb-6">00 — closing</p>
 
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white leading-tight tracking-tight mb-4 max-w-lg">
                     Looking for a developer who ships and keeps learning?
                 </h2>
 
                 <p className="text-gray-600 dark:text-gray-400 max-w-md text-sm mb-8 mx-auto sm:mx-0">
-                    I'm a Information Technology graduate actively seeking full-time opportunities — on-site,
+                    I'm an Information Technology graduate actively seeking full-time opportunities — on-site,
                     hybrid, or remote. If my work looks like a fit, I'd love to hear from you.
                 </p>
 
