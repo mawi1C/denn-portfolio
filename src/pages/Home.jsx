@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
 import TechMarquee from '../components/TechMarquee'
 import CommunityChat from '../components/CommunityChat'
-import { Mail, Phone, ExternalLink } from 'lucide-react'
+import { Mail, Phone, ExternalLink, UserRound, Code2, FolderGit2, Briefcase } from 'lucide-react'
 import profileImg from '../assets/profile.jpg'
 // 1. Import your CV file here
 import cvFile from '../assets/denjohn_cv.pdf' 
 import { languagesFrameworks, projects, experience } from '../lib/portfolioData'
 import ProfilePhoto from '../components/ProfilePhoto'
+import SectionIcon from '../components/SectionIcon'
 
 const techStack = ['JavaScript', 'TypeScript', 'PHP', 'React', 'React Native', 'Node.js', 'Laravel', 'CodeIgniter', 'MySQL', 'Tailwind CSS', 'Firebase', 'Git']
 
@@ -79,7 +80,7 @@ export default function Home() {
             </section>
 
             {/* About */}
-            <section id="about" className="py-20 border-t border-gray-200 dark:border-white/10">
+            <section id="about" className="relative overflow-hidden py-20 border-t border-gray-200 dark:border-white/10">
                 <p className="text-xs font-mono text-gray-400 dark:text-gray-600 mb-2">02 — about</p>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight">about</h2>
                 <p className="text-gray-700 dark:text-gray-300 max-w-xl leading-relaxed mb-4">
@@ -95,10 +96,12 @@ export default function Home() {
                     assist users and optimize systems. I'm passionate about learning new technologies,
                     collaborating with teams, and contributing to projects that create meaningful impact.
                 </p>
+
+                <SectionIcon icon={UserRound} />
             </section>
 
             {/* Skills preview */}
-            <section id="skills" className="py-20 border-t border-gray-200 dark:border-white/10">
+            <section id="skills" className="relative overflow-hidden py-20 border-t border-gray-200 dark:border-white/10">
                 <div className="flex items-center justify-between mb-2">
                     <p className="text-xs font-mono text-gray-400 dark:text-gray-600">03 — skills</p>
                     <Link to="/skills" className="text-xs font-mono text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition underline underline-offset-2">
@@ -113,10 +116,12 @@ export default function Home() {
                         </span>
                     ))}
                 </div>
+
+                <SectionIcon icon={Code2} />
             </section>
 
             {/* Projects preview */}
-            <section id="projects" className="py-20 border-t border-gray-200 dark:border-white/10 overflow-hidden">
+            <section id="projects" className="relative py-20 border-t border-gray-200 dark:border-white/10 overflow-hidden">
                 <div className="flex items-center justify-between mb-2">
                     <p className="text-xs font-mono text-gray-400 dark:text-gray-600">04 — projects</p>
                     <Link to="/projects" className="text-xs font-mono text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition underline underline-offset-2">
@@ -130,7 +135,7 @@ export default function Home() {
                 </p>
 
                 {/* Layered Deck Container */}
-                <div className="relative min-h-[380px] sm:min-h-[420px] w-full max-w-3xl mx-auto flex items-center justify-center select-none">
+                <div className="relative min-h-[380px] sm:min-h-[320px] w-full max-w-3xl mx-auto flex items-center justify-center select-none">
                     {(() => {
                         const orderedProjects = [...featuredProjects.slice(0, 3)];
                         const typoTerrorIdx = orderedProjects.findIndex(p => p.title.toLowerCase().includes('typo terror'));
@@ -214,10 +219,12 @@ export default function Home() {
                         })
                     })()}
                 </div>
+
+                <SectionIcon icon={FolderGit2} />
             </section>
             
             {/* Experience preview */}
-            <section id="experience" className="py-20 border-t border-gray-200 dark:border-white/10">
+            <section id="experience" className="relative overflow-hidden py-20 border-t border-gray-200 dark:border-white/10">
                 <div className="flex items-center justify-between mb-2">
                     <p className="text-xs font-mono text-gray-400 dark:text-gray-600">05 — experience</p>
                     <Link to="/experience" className="text-xs font-mono text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition underline underline-offset-2">
@@ -236,10 +243,12 @@ export default function Home() {
                         </div>
                     </div>
                 ))}
+
+                <SectionIcon icon={Briefcase} />
             </section>
 
             {/* Closing CTA */}
-            <section id="closing" className="py-24 border-t border-gray-200 dark:border-white/10 text-center sm:text-left">
+            <section id="closing" className="relative overflow-hidden py-24 border-t border-gray-200 dark:border-white/10 text-center sm:text-left">
                 <p className="text-xs font-mono text-gray-400 dark:text-gray-600 mb-6">07 — closing</p>
 
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white leading-tight tracking-tight mb-4 max-w-lg">
