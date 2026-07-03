@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react'
+// 1. Import both favicon assets directly (Adjust relative paths if necessary)
+import faviconDark from '../assets/favicon.png'
+import faviconWhite from '../assets/favicon-white.png'
 
 function getSystemTheme() {
   return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -7,9 +10,7 @@ function getSystemTheme() {
 }
 
 export function useTheme() {
-  // mode = what the user picked: 'light' | 'dark' | 'system'
   const [mode, setMode] = useState(() => localStorage.getItem('theme_mode') || 'system')
-  // resolvedTheme = the actual applied theme: 'light' | 'dark'
   const [resolvedTheme, setResolvedTheme] = useState(() =>
     mode === 'system' ? getSystemTheme() : mode
   )
@@ -25,6 +26,12 @@ export function useTheme() {
       root.classList.remove('dark')
     }
 
+    // 2. FIX: Dynamically swap the asset path on theme change
+    const faviconElement = document.getElementById('dynamic-favicon')
+    if (faviconElement) {
+      faviconElement.href = applied === 'dark' ? faviconWhite : faviconDark
+    }
+
     localStorage.setItem('theme_mode', mode)
   }, [mode])
 
@@ -37,6 +44,12 @@ export function useTheme() {
       const applied = e.matches ? 'dark' : 'light'
       setResolvedTheme(applied)
       document.documentElement.classList.toggle('dark', applied === 'dark')
+
+      // 3. FIX: Keep system setting updates in sync
+      const faviconElement = document.getElementById('dynamic-favicon')
+      if (faviconElement) {
+        faviconElement.href = applied === 'dark' ? faviconWhite : faviconDark
+      }
     }
 
     mediaQuery.addEventListener('change', handleChange)

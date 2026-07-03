@@ -7,8 +7,12 @@ import { useScrollProgress } from '../hooks/useScrollProgress'
 import { useMobileMenu } from '../hooks/useMobileMenu'
 import ViewerBadge from './ViewerBadge'
 
+// 1. IMPORT YOUR LOGO GRAPHIC VARIATIONS HERE
+import logoDark from '../assets/favicon.png'
+import logoWhite from '../assets/favicon-white.png'
+
 export default function Sidebar() {
-  const { mode, setMode } = useTheme()
+  const { mode, setMode, resolvedTheme } = useTheme() // Added resolvedTheme here
   const location = useLocation()
   const isHome = location.pathname === '/'
   const scrollProgress = useScrollProgress()
@@ -53,7 +57,32 @@ export default function Sidebar() {
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'g', ctrlKey: true }))
   }
 
-  // FIXED: Changed from uppercase Component to lowercase helper function
+  // DYNAMIC RESPONSIVE LOGO RENDERER (Fixed vertical spacing gap)
+  const renderLogo = (isMobile = false) => (
+    <Link
+      to="/#hero"
+      className={`flex items-center gap-2.5 text-gray-900 dark:text-white hover:opacity-80 transition-opacity select-none ${isMobile ? '' : 'mb-8'}`}
+    >
+      {/* Dynamic graphic emblem */}
+      <img
+        src={resolvedTheme === 'dark' ? logoWhite : logoDark}
+        alt="DJ Monogram"
+        className={isMobile ? "w-8 h-8 object-contain" : "w-10 h-10 object-contain"}
+      />
+
+      {/* Vertical divider line */}
+      <div className={`w-[1px] bg-gray-200 dark:bg-white/10 ${isMobile ? 'h-6' : 'h-8'}`} />
+
+      {/* Dual line layout text branding */}
+      {/* FIX: Dropped leading from 1.05 to 0.85 to collapse font padding boxes */}
+      <div className="flex flex-col justify-center font-sans font-bold tracking-tight text-left leading-[0.85]">
+        <span className={isMobile ? "text-sm" : "text-base"}>Den</span>
+        {/* FIX: Applied a small negative margin to perfectly pull John upward */}
+        <span className={isMobile ? "text-sm -mt-0.5" : "text-base -mt-2"}>John</span>
+      </div>
+    </Link>
+  )
+
   const renderNavList = () => (
     <nav className="flex flex-col gap-1 flex-1">
       {navItems.map((item) => {
@@ -65,13 +94,9 @@ export default function Sidebar() {
             onClick={() => setIsOpen(false)}
             className={({ isActive }) => {
               const active = item.hash ? isHashActive : isActive
-
-              // Applied the iOS fluid curve: cubic-bezier(0.25, 1, 0.5, 1) with a 500ms duration
               const base = 'group relative flex items-center gap-3 pr-3 py-1.5 rounded-lg text-xs font-mono transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] '
-
               const activeClasses = 'text-gray-900 dark:text-white bg-gray-100 dark:bg-white/5 pl-4'
               const inactiveClasses = 'text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:translate-x-0.5 pl-0'
-
               return base + (active ? activeClasses : inactiveClasses)
             }}
           >
@@ -80,7 +105,6 @@ export default function Sidebar() {
               const barClasses = active ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
               return (
                 <>
-                  {/* Matched the indicator bar to use the exact same iOS curve and duration */}
                   <span className={`absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 rounded-full bg-gray-900 dark:bg-white transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${barClasses}`} />
                   <item.icon size={14} className="flex-shrink-0" />
                   <span className="flex-1">{item.label}</span>
@@ -94,7 +118,6 @@ export default function Sidebar() {
     </nav>
   )
 
-  // FIXED: Changed from uppercase Component to lowercase helper function
   const renderFooterContent = () => (
     <div className="space-y-4">
       <div className="pb-4 border-b border-gray-200 dark:border-white/10">
@@ -158,9 +181,8 @@ export default function Sidebar() {
     <>
       {/* Mobile top bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-14 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-white/10 flex items-center justify-between px-4 z-40">
-        <Link to="/#hero" className="font-mono text-sm text-gray-900 dark:text-white">
-          Den John
-        </Link>
+        {/* FIX: Replaced custom text element with the modular responsive logo component */}
+        {renderLogo(true)}
         <button
           onClick={() => setIsOpen(true)}
           aria-label="Open menu"
@@ -190,11 +212,9 @@ export default function Sidebar() {
           </button>
         </div>
 
-        {/* FIXED: Called as a function instead of a component */}
         {renderNavList()}
 
         <div className="flex flex-col gap-1 mt-2">
-          {/* Added pl-4 here too for matching icon alignment */}
           <button
             onClick={() => { triggerAMA(); setIsOpen(false) }}
             className="flex items-center gap-3 pl-4 pr-3 py-2 rounded-lg text-xs font-mono text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:translate-x-0.5 transition-all duration-200"
@@ -216,7 +236,6 @@ export default function Sidebar() {
           <p className="text-xs font-mono text-gray-500 dark:text-gray-400">building this portfolio</p>
         </div>
 
-        {/* FIXED: Called as a function instead of a component */}
         {renderFooterContent()}
       </div>
 
@@ -225,12 +244,10 @@ export default function Sidebar() {
         className="hidden md:flex fixed top-0 left-0 h-screen w-64 border-r border-gray-200 dark:border-white/10 bg-white dark:bg-gray-950 flex-col p-6 transition-colors"
         style={{ animation: 'fadeInUp 0.4s ease-out' }}
       >
-        <Link to="/#hero" className="font-mono text-sm text-gray-900 dark:text-white mb-8 hover:opacity-70 transition">
-          Den John
-        </Link>
+        {/* FIX: Replaced desktop layout branding header with standard logo component */}
+        {renderLogo(false)}
 
         <div className="flex gap-3">
-          {/* FIXED: Called as a function instead of a component */}
           {renderNavList()}
           <div className="relative w-1 bg-gray-100 dark:bg-white/5 rounded-full flex-shrink-0">
             <div
@@ -252,7 +269,6 @@ export default function Sidebar() {
         </div>
 
         <div className="mt-auto">
-          {/* FIXED: Called as a function instead of a component */}
           {renderFooterContent()}
         </div>
       </aside>

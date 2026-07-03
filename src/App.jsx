@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom' // FIX: Imported useLocation
+import { useEffect } from 'react'                           // FIX: Imported useEffect
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import SkillsPage from './pages/SkillsPage'
@@ -12,6 +13,22 @@ import CertificatesPage from './pages/CertificatesPage'
 
 function App() {
   useScrollToHash()
+  const location = useLocation() // Track path changes
+
+  // Dynamic Tab Title Updater
+  useEffect(() => {
+    const routeTitles = {
+      '/': 'Den John — Portfolio',
+      '/skills': 'Den John — Tech Stack',
+      '/projects': 'Den John — Projects',
+      '/experience': 'Den John — Experience',
+      '/chat': 'Den John — Community Chat',
+      '/certificates': 'Den John — Certificates'
+    }
+
+    // Fallback to baseline if path isn't explicitly listed
+    document.title = routeTitles[location.pathname] || 'Den John — Portfolio'
+  }, [location])
 
   return (
     <Layout>

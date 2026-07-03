@@ -40,7 +40,7 @@ export default function Home() {
 
                     <div className="pb-2">
                         <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 dark:text-white leading-[0.95] tracking-tight mb-4">
-                            Den John
+                            Den John Emmanuel
                             <br />
                             Cabria
                         </h1>
