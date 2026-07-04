@@ -4,6 +4,23 @@ import { Bot, ArrowRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import MicButton from './MicButton'
 
+// Normalization function to catch common voice recognition errors
+const normalizeSpeech = (text) => {
+  let cleaned = text.toLowerCase();
+  
+  // Fix name misrecognitions
+  cleaned = cleaned.replace(/\b(then john|dungeon|dan john|don john)\b/g, 'den john');
+  cleaned = cleaned.replace(/\b(hello then)\b/g, 'hello den');
+  
+  // Fix tech stack misrecognitions
+  cleaned = cleaned.replace(/\b(what are your text|whats your text)\b/g, 'whats your tech stack');
+  
+  // Fix project misrecognitions
+  cleaned = cleaned.replace(/\b(power find|po find|paw find)\b/g, 'pawfind');
+
+  return cleaned;
+};
+
 export default function AskMeAnything() {
   const [isOpen, setIsOpen] = useState(false)
   const [input, setInput] = useState('')
@@ -177,8 +194,9 @@ export default function AskMeAnything() {
             />
             <MicButton
               onResult={(transcript) => {
-                setInput(transcript)
-                setTimeout(() => executeQuery(transcript), 350)
+                const normalizedText = normalizeSpeech(transcript)
+                setInput(normalizedText)
+                setTimeout(() => executeQuery(normalizedText), 350)
               }}
             />
           </form>

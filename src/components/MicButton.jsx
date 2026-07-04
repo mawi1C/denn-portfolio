@@ -1,18 +1,7 @@
 import { Mic, MicOff } from 'lucide-react'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
 
-/**
- * Drop-in mic button for voice input. Matches the portfolio's existing
- * pill-button / mono-caption visual language (see Sidebar's theme toggle
- * and "currently building" status dot for the same conventions).
- *
- * Usage:
- *   <MicButton onResult={(text) => setInput(text)} />
- *
- * Pass `autoSend` if you want the recognized text submitted immediately
- * instead of just populating the input for the user to review first.
- */
-export default function MicButton({ onResult, lang = 'en-US', className = '' }) {
+export default function MicButton({ onResult, lang = 'en-PH', className = '' }) {
   const { isSupported, isListening, interimTranscript, error, toggle } = useSpeechRecognition({
     lang,
     onFinalResult: onResult,

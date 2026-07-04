@@ -3,15 +3,9 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 /**
  * Wraps the browser's native Web Speech API (SpeechRecognition /
  * webkitSpeechRecognition). No external dependencies, no API keys —
- * this runs entirely client-side in supported browsers (Chrome, Edge,
- * Safari; Firefox does not currently support it natively).
- *
- * @param {object} options
- * @param {string} options.lang - BCP-47 language tag, e.g. 'en-US' or 'fil-PH'
- * @param {(text: string) => void} options.onFinalResult - called once per
- *   finished utterance with the recognized text
+ * this runs entirely client-side in supported browsers.
  */
-export function useSpeechRecognition({ lang = 'en-US', onFinalResult } = {}) {
+export function useSpeechRecognition({ lang = 'en-PH', onFinalResult } = {}) {
   const recognitionRef = useRef(null)
   const [isSupported, setIsSupported] = useState(true)
   const [isListening, setIsListening] = useState(false)
@@ -28,6 +22,16 @@ export function useSpeechRecognition({ lang = 'en-US', onFinalResult } = {}) {
     }
 
     const recognition = new SpeechRecognitionImpl()
+    
+    // Prime the recognition engine with specific terms to increase accuracy
+    const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList
+    if (SpeechGrammarList) {
+      const speechRecognitionList = new SpeechGrammarList()
+      const grammar = '#JSGF V1.0; grammar terms; public <term> = Den John | PawFind | tech stack | React | Vite | Expo | Vercel;'
+      speechRecognitionList.addFromString(grammar, 1)
+      recognition.grammars = speechRecognitionList
+    }
+
     recognition.lang = lang
     recognition.continuous = false
     recognition.interimResults = true
@@ -50,12 +54,10 @@ export function useSpeechRecognition({ lang = 'en-US', onFinalResult } = {}) {
         }
       }
       setInterimTranscript(interim)
+      
       if (final.trim()) {
         onFinalResult?.(final.trim())
         setInterimTranscript('')
-        // Some browsers don't reliably auto-close the mic right after a final
-        // result even with continuous=false — stop explicitly so it doesn't
-        // appear to hang open ("still listening") for a few extra seconds.
         recognition.stop()
       }
     }
@@ -97,7 +99,7 @@ export function useSpeechRecognition({ lang = 'en-US', onFinalResult } = {}) {
     try {
       recognitionRef.current.start()
     } catch {
-      // start() throws if a recognition session is already active — ignore
+      // ignore
     }
   }, [isListening])
 
@@ -106,11 +108,8 @@ export function useSpeechRecognition({ lang = 'en-US', onFinalResult } = {}) {
   }, [])
 
   const toggle = useCallback(() => {
-    if (isListening) {
-      stop()
-    } else {
-      start()
-    }
+    if (isListening) stop()
+    else start()
   }, [isListening, start, stop])
 
   return { isSupported, isListening, interimTranscript, error, start, stop, toggle }
