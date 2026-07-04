@@ -38,7 +38,7 @@ export default function AskMeAnything() {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'a') {
         e.preventDefault()
         setIsOpen((prev) => !prev)
       }
@@ -106,7 +106,7 @@ export default function AskMeAnything() {
           className="fixed bottom-6 right-6 flex items-center gap-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 text-xs font-mono px-4 py-2.5 rounded-full shadow-lg hover:text-black dark:hover:text-white transition z-30 group"
         >
           <span>Ask Ned anything</span>
-          <span className="hidden sm:inline text-gray-400 group-hover:text-gray-500 transition">Ctrl + K</span>
+          <span className="hidden sm:inline text-gray-400 group-hover:text-gray-500 transition">Ctrl + A</span>
         </button>
       )}
 

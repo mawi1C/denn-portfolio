@@ -27,7 +27,7 @@ export default function ProjectsPage() {
             <div key={p.title} className="group">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-gray-900/10 dark:border-white/10 rounded-2xl p-6 bg-gradient-to-br from-gray-50 via-white to-white dark:from-white/[0.02] dark:to-transparent shadow-sm mb-4">
                 <div className="flex items-center gap-4">
-                  
+
                   <div className="w-12 h-12 rounded-xl bg-gray-100 dark:bg-white/5 flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden border border-gray-200/50 dark:border-white/5">
                     {p.logo ? (
                       <img src={p.logo} alt={`${name} logo`} className="w-full h-full object-cover" />
@@ -35,7 +35,7 @@ export default function ProjectsPage() {
                       <div className="w-full h-full bg-gray-200 dark:bg-gray-800" />
                     )}
                   </div>
-                  
+
                   <div>
                     <div className="flex items-center gap-2 mb-0.5">
                       <h2 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight lowercase">
@@ -52,10 +52,11 @@ export default function ProjectsPage() {
                 </div>
 
                 {p.link && (
-                  <a 
-                    href={p.link} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+                  <a
+                    href={p.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cursor="external"
                     className="inline-flex items-center gap-1.5 text-xs font-mono bg-gray-900 text-white dark:bg-white dark:text-gray-950 px-4 py-2 rounded-xl shadow-sm hover:opacity-90 transition-all font-medium self-start sm:self-center"
                   >
                     {isPlayStore ? 'get app' : 'launch app'} <ExternalLink size={12} />
@@ -99,10 +100,10 @@ export default function ProjectsPage() {
                 {p.title}
               </h3>
               {p.link && (
-                <a 
-                  href={p.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href={p.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-xs font-mono text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors mt-1 flex-shrink-0"
                 >
                   live demo <ExternalLink size={12} />

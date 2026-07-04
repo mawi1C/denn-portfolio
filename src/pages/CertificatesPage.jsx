@@ -4,7 +4,7 @@ import { ArrowLeft, ChevronDown, Award, GraduationCap, Trophy, Briefcase, Maximi
 
 // 1. IMPORT YOUR CERTIFICATE IMAGES HERE
 import bitscon from '../assets/bitscon-2023.png'
-import bitscon2024 from '../assets/bitscon-2024.png' 
+import bitscon2024 from '../assets/bitscon-2024.png'
 import psaOjt from '../assets/psa-ojt.jpg'
 import programmingChallenge from '../assets/programming-challenge.png'
 import deansListSem2_2425 from '../assets/deans-list-2nd-2024-2025.jpg'
@@ -105,7 +105,7 @@ export default function CertificatesPage() {
       <Link to="/" className="inline-flex items-center gap-1 text-xs font-mono text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition mb-8">
         <ArrowLeft size={14} /> back
       </Link>
-      
+
       <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">
         certificates & awards
       </h1>
@@ -159,28 +159,27 @@ export default function CertificatesPage() {
                         </div>
                         <ChevronDown
                           size={16}
-                          className={`text-gray-400 transition-transform duration-300 shrink-0 ml-4 ${
-                            isExpanded ? 'rotate-180' : ''
-                          }`}
+                          className={`text-gray-400 transition-transform duration-300 shrink-0 ml-4 ${isExpanded ? 'rotate-180' : ''
+                            }`}
                         />
                       </button>
 
                       {/* Accordion Content */}
                       <div
-                        className={`grid transition-all duration-300 ease-in-out ${
-                          isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-                        }`}
+                        className={`grid transition-all duration-300 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                          }`}
                       >
                         <div className="overflow-hidden">
                           <div className="p-4 pt-0">
                             <div className="pt-4 border-t border-gray-100 dark:border-white/5 flex flex-col md:flex-row gap-6">
-                              
+
                               {/* Clickable Image Link */}
                               <div className="md:w-1/2 shrink-0">
                                 <a
                                   href={cert.image}
                                   target="_blank"
                                   rel="noopener noreferrer"
+                                  data-cursor="zoom" /* <-- ADD THIS */
                                   className="group/img relative block overflow-hidden rounded-lg border border-gray-100 dark:border-white/10 cursor-zoom-in"
                                   title="View full image in new tab"
                                 >
@@ -198,7 +197,7 @@ export default function CertificatesPage() {
                                   </div>
                                 </a>
                               </div>
-                              
+
                               {/* Extended Details */}
                               <div className="md:w-1/2 flex flex-col justify-center">
                                 <p className="text-sm font-medium text-gray-900 dark:text-white mb-2">

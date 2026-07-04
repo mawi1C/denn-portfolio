@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { Sun, Moon, Monitor, Code2, FolderGit2, Briefcase, MessageCircle, Award, Mail, Phone, Menu, X, Sparkles, Keyboard } from 'lucide-react'
+import { Sun, Moon, Monitor, Code2, FolderGit2, Briefcase, MessageCircle, Award, Mail, Phone, Menu, X, Sparkles, FlaskConical} from 'lucide-react'
 import { useTheme } from '../hooks/useTheme'
 import { useActiveSection } from '../hooks/useActiveSection'
 import { useScrollProgress } from '../hooks/useScrollProgress'
@@ -32,7 +32,8 @@ export default function Sidebar() {
     { to: '/experience', icon: Briefcase, label: 'Experience', index: '02' },
     { to: '/skills', icon: Code2, label: 'Stack', index: '03' },
     { to: '/certificates', icon: Award, label: 'Certificates', index: '04' },
-    { to: '/chat', icon: MessageCircle, label: 'Chat', index: '05' },
+    { to: '/templates', icon: FlaskConical, label: 'Lab', index: '05' }, // Added TemplatePage
+    { to: '/chat', icon: MessageCircle, label: 'Chat', index: '06' },
   ]
 
   useEffect(() => {
@@ -229,7 +230,7 @@ export default function Sidebar() {
             onClick={() => { triggerTypingTest(); setIsOpen(false) }}
             className="flex items-center gap-3 pl-4 pr-3 py-2 rounded-lg text-xs font-mono text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:translate-x-0.5 transition-all duration-200"
           >
-            <Keyboard size={14} className="flex-shrink-0" />
+            <FlaskConical size={14} className="flex-shrink-0" />
             <span className="flex-1 text-left">Typing test</span>
           </button>
         </div>
@@ -257,17 +258,6 @@ export default function Sidebar() {
               className="absolute top-0 left-0 w-full bg-gray-900 dark:bg-white rounded-full transition-[height] duration-150 ease-out"
               style={{ height: isHome ? `${scrollProgress}%` : '0%' }}
             />
-          </div>
-        </div>
-
-        <div className="mt-10 pt-4 border-t border-gray-100 dark:border-white/5">
-          <p className="text-[10px] font-mono text-gray-300 dark:text-gray-700 mb-1">currently</p>
-          <div className="flex items-center gap-1.5">
-            <span className="relative flex w-1.5 h-1.5">
-              <span className="absolute inline-flex w-full h-full rounded-full bg-gray-400 dark:bg-gray-500 opacity-75 animate-ping" />
-              <span className="relative inline-flex w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500" />
-            </span>
-            <p className="text-xs font-mono text-gray-500 dark:text-gray-400">building this portfolio</p>
           </div>
         </div>
 
