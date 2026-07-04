@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import { matchQuestion } from '../lib/matchQuestion'
 import { Bot, ArrowRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import MicButton from './MicButton'
 
 export default function AskMeAnything() {
   const [isOpen, setIsOpen] = useState(false)
@@ -165,14 +166,20 @@ export default function AskMeAnything() {
             <div ref={logEndRef} />
           </div>
 
-          <form onSubmit={handleAsk} className="mt-4 pt-4 pb-2 border-t border-gray-200 dark:border-white/10 shrink-0">
+          <form onSubmit={handleAsk} className="mt-4 pt-4 pb-2 border-t border-gray-200 dark:border-white/10 shrink-0 flex items-center gap-3">
             <input
               ref={inputRef}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="ask Ned a question..."
-              className="w-full bg-transparent text-gray-900 dark:text-white font-mono text-xs outline-none"
+              className="flex-1 min-w-0 bg-transparent text-gray-900 dark:text-white font-mono text-xs outline-none"
+            />
+            <MicButton
+              onResult={(transcript) => {
+                setInput(transcript)
+                inputRef.current?.focus()
+              }}
             />
           </form>
         </div>
