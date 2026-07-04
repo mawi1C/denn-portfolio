@@ -3,7 +3,7 @@ import typoTerrorLogo from '../assets/typo-terror.webp'
 import quaestioLogo from '../assets/quaestio.png'
 import pawfindLogo from '../assets/pawfind.png'
 import bitscon2024Img from '../assets/bitscon-2024.png' 
-import bitscon2023Img from '../assets/bitscon-2023.jpg'
+import bitscon2023Img from '../assets/bitscon-2023.png'
 
 export const languagesFrameworks = ['JavaScript', 'TypeScript', 'PHP', 'React', 'React Native', 'Node.js', 'Laravel', 'CodeIgniter', 'Tailwind CSS']
 

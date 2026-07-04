@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import { ArrowLeft, ChevronDown, Award, GraduationCap, Trophy, Briefcase, Maximize2 } from 'lucide-react'
 
 // 1. IMPORT YOUR CERTIFICATE IMAGES HERE
-import bitscon from '../assets/bitscon-2023.jpg'
+import bitscon from '../assets/bitscon-2023.png'
 import bitscon2024 from '../assets/bitscon-2024.png' 
 import psaOjt from '../assets/psa-ojt.jpg'
-import programmingChallenge from '../assets/programming-challenge.jpg'
+import programmingChallenge from '../assets/programming-challenge.png'
 import deansListSem2_2425 from '../assets/deans-list-2nd-2024-2025.jpg'
 import deansListSem1_2324 from '../assets/deans-list-1st-2023-2024.jpg'
 import deansListSem1_2425 from '../assets/deans-list-1st-2024-2025.jpg'
