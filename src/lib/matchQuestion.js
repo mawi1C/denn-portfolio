@@ -1,19 +1,34 @@
 import { languagesFrameworks, softwareTools, experience } from './portfolioData'
 
 // ---------------------------------------------------------------------------
+// 1. Acoustic Normalization
+// Catches common voice recognition misinterpretations BEFORE the matching engine sees them.
+// ---------------------------------------------------------------------------
+const normalizeVoiceTypos = (text) => {
+  let cleaned = text.toLowerCase();
+  
+  // Fix Name
+  cleaned = cleaned.replace(/\b(then john|dungeon|dan john|don john)\b/g, 'den john');
+  cleaned = cleaned.replace(/\b(hello then)\b/g, 'hello den');
+  
+  // Fix Tech Stack
+  cleaned = cleaned.replace(/\b(what are your text|whats your text|text stack)\b/g, 'tech stack');
+  
+  // Fix PawFind
+  cleaned = cleaned.replace(/\b(power find|po find|paw find)\b/g, 'pawfind');
+
+  return cleaned;
+};
+
+// ---------------------------------------------------------------------------
 // Knowledge base
-// Each entry can optionally include:
-//   id      — stable key used for "tell me more" follow-ups and history lookups
-//   label   — short human-friendly name, used in quick-reply chips and
-//             disambiguation prompts ("did you mean: PawFind or Certificates?")
-//   more    — a deeper-dive response shown when the user asks a follow-up
-//   action  — { type: 'navigate' | 'link', target, label }
 // ---------------------------------------------------------------------------
 export const knowledgeBase = [
   {
     id: 'greeting',
     label: 'Say Hi',
-    keywords: ['hi', 'hello', 'hey', 'greetings', 'sup', 'yo', 'who are you', 'what is this', 'name', 'ned'],
+    // Added 'hello den' and 'den john' to catch the normalized name greetings
+    keywords: ['hi', 'hello', 'hey', 'greetings', 'sup', 'yo', 'who are you', 'what is this', 'name', 'ned', 'hello den'],
     response: "hey! i'm Ned, den john's portfolio assistant. 🤖 think of me as his digital co-pilot. i can talk about his frontend/backend stack, break down the features of his production apps, dive into his PSA internship, or give you details on his tech credentials. what are you curious about today?"
   },
   {
@@ -27,7 +42,8 @@ export const knowledgeBase = [
   {
     id: 'projects_overview',
     label: 'Projects Overview',
-    keywords: ['project', 'build', 'specialize', 'apps', 'what do you do', 'role', 'capable of', 'make', 'portfolio'],
+    // Added 'den john' and 'about den john' to catch "tell me about den john"
+    keywords: ['project', 'build', 'specialize', 'apps', 'what do you do', 'role', 'capable of', 'make', 'portfolio', 'den john', 'about den john', 'tell me about den john'],
     response: "den john specializes in mobile and web development, specifically using React Native, Expo, and Vite/React. he doesn't just build layout templates; he ships complete tools that solve real problems.\n\nhis portfolio covers a broad spectrum from AI-powered lost pet trackers to full dental management systems. want to see the full project landscape?",
     action: { type: 'navigate', target: '/projects', label: "Explore Den John's Projects Portfolio" }
   },
@@ -73,7 +89,8 @@ export const knowledgeBase = [
   {
     id: 'tech_stack',
     label: 'Tech Stack',
-    keywords: ['stack', 'tech', 'skill', 'language', 'framework', 'code', 'javascript', 'react', 'typescript', 'php', 'laravel', 'tailwind'],
+    // Added 'tech stack' as an explicit keyword to catch the normalized output
+    keywords: ['stack', 'tech', 'skill', 'language', 'framework', 'code', 'javascript', 'react', 'typescript', 'php', 'laravel', 'tailwind', 'tech stack'],
     response: `if you look under the hood of his builds, den john is heavily focused on modern JavaScript and TypeScript. his daily driver frontend setup relies on ${languagesFrameworks.slice(0, 5).join(', ')}, while his server and backend architectures utilize systems like ${languagesFrameworks.slice(5).join(', ')}.`,
     action: { type: 'navigate', target: '/skills', label: 'View Detailed Tech Stack & Tools' },
     more: `on the tooling side he works daily in ${softwareTools.slice(0, 6).join(', ')}. he picks his stack based on what ships fastest without sacrificing maintainability.`
@@ -91,7 +108,7 @@ export const knowledgeBase = [
     keywords: ['intern', 'psa', 'experience', 'work history', 'philippine statistics authority', 'past job'],
     response: `den john completed an interactive data encoder internship at the Philippine Statistics Authority (PSA). working inside a government facility meant handling critical, highly confidential public assets under strict state privacy mandates.`,
     action: { type: 'navigate', target: '/experience', label: 'View Full Work History' },
-    more: experience[0] ? `specifically he worked as ${experience[0].role} from ${experience[0].date}, developing workflows that reduced daily processing time and encoding errors while collaborating closely with supervisors on data integrity.` : undefined
+    more: experience && experience[0] ? `specifically he worked as ${experience[0].role} from ${experience[0].date}, developing workflows that reduced daily processing time and encoding errors while collaborating closely with supervisors on data integrity.` : undefined
   },
   {
     id: 'future_goals',
@@ -181,11 +198,6 @@ export const fallbackResponse = {
   action: null
 }
 
-// ---------------------------------------------------------------------------
-// Quick-reply suggestion chips — the frontend renders these as tappable
-// buttons; clicking one just calls matchQuestion(query, context) exactly
-// like the user typed it themselves.
-// ---------------------------------------------------------------------------
 export const suggestedPrompts = [
   { label: 'Ask about PawFind', query: 'tell me about pawfind' },
   { label: 'See tech stack', query: 'what is your tech stack' },
@@ -195,14 +207,11 @@ export const suggestedPrompts = [
   { label: 'Contact info', query: 'how can i contact you' }
 ]
 
-// Phrases that mean "expand on the last thing you said" rather than a new topic
 const FOLLOWUP_PHRASES = [
   'tell me more', 'more', 'go on', 'continue', 'elaborate', 'expand',
   'anything else', 'what else', 'and', 'more details', 'more info', 'keep going'
 ]
 
-// Phrases that mean "no, the earlier topic, not the last one" — triggers a
-// search across the whole conversation history rather than just the last id
 const BACKREFERENCE_PHRASES = [
   'go back to', 'back to the', 'earlier you mentioned', 'you mentioned earlier',
   'what about that', 'that one about', 'the one about', 'before that', 'go back'
@@ -216,10 +225,6 @@ function getLabel(entry) {
   return entry.label || humanizeId(entry.id)
 }
 
-// ---------------------------------------------------------------------------
-// Unmatched-query logging — so real visitor questions Ned couldn't answer
-// are visible later instead of silently vanishing into the fallback.
-// ---------------------------------------------------------------------------
 const LOG_STORAGE_KEY = 'ned_unmatched_queries'
 const LOG_MAX_ENTRIES = 50
 
@@ -231,7 +236,7 @@ export function logUnmatchedQuery(input) {
     while (existing.length > LOG_MAX_ENTRIES) existing.shift()
     window.localStorage.setItem(LOG_STORAGE_KEY, JSON.stringify(existing))
   } catch {
-    // localStorage full or unavailable — logging is best-effort, never blocks the chat
+    // localStorage full or unavailable
   }
 }
 
@@ -249,9 +254,6 @@ export function clearUnmatchedQueries() {
   window.localStorage.removeItem(LOG_STORAGE_KEY)
 }
 
-// ---------------------------------------------------------------------------
-// Fuzzy matching — catches typos like "javscript" or "experiance"
-// ---------------------------------------------------------------------------
 function levenshtein(a, b) {
   if (a === b) return 0
   const al = a.length, bl = b.length
@@ -277,16 +279,12 @@ function levenshtein(a, b) {
   return prev[bl]
 }
 
-// Allowed edit-distance scales with word length so short words stay strict
 function fuzzyThreshold(len) {
   if (len <= 4) return 0
   if (len <= 6) return 1
   return 2
 }
 
-// Very small stemmer — just enough to make "projects" match "project",
-// "apps" match "app", "builds" match "build", etc. Not linguistically
-// complete, but removes the most common false-negative cases.
 function stem(word) {
   if (word.length > 4 && word.endsWith('ies')) return word.slice(0, -3) + 'y'
   if (word.length > 5 && word.endsWith('es')) return word.slice(0, -2)
@@ -303,9 +301,6 @@ function tokenize(str) {
     .filter(Boolean)
 }
 
-// Shared scoring logic: how strongly does this entry's keyword list match
-// the given normalized string / stemmed token list? Used both for the main
-// weighted match and for resolving "go back to..." references.
 function scoreEntry(entry, normalized, inputTokensStemmed) {
   let score = 0
   for (const keyword of entry.keywords) {
@@ -324,12 +319,6 @@ function scoreEntry(entry, normalized, inputTokensStemmed) {
   return score
 }
 
-// Try to resolve a "go back to X" reference against the conversation's
-// topic history (array of ids, oldest first). Returns:
-//   - an entry, if a clear match was found
-//   - the string 'ambiguous', if history has multiple candidates and none
-//     scored clearly higher than the rest
-//   - null, if there's no history to search
 function resolveBackreference(normalized, history) {
   if (!history || history.length === 0) return null
 
@@ -353,12 +342,10 @@ function resolveBackreference(normalized, history) {
     }
   }
 
-  // Clear winner: scored something AND meaningfully ahead of the runner-up
   if (best && bestScore > 0 && bestScore > secondScore) {
     return best
   }
 
-  // Only one distinct topic in history — safe to assume that's what they mean
   if (candidates.length === 1) {
     return candidates[0]
   }
@@ -368,17 +355,16 @@ function resolveBackreference(normalized, history) {
 
 // ---------------------------------------------------------------------------
 // Core matcher
-//
-// context:
-//   { history: [id, id, ...] }  — recommended: full topic stack, oldest first
-//   { lastId: id }              — back-compat shorthand for history: [lastId]
 // ---------------------------------------------------------------------------
 export function matchQuestion(input, context = {}) {
-  const normalized = input.toLowerCase().trim().replace(/[-_]/g, ' ').replace(/[^\w\s']/g, '').replace(/\s+/g, ' ')
+  // 1. APPLY VOICE NORMALIZATION FIRST
+  const voiceCorrectedInput = normalizeVoiceTypos(input);
+  
+  const normalized = voiceCorrectedInput.trim().replace(/[-_]/g, ' ').replace(/[^\w\s']/g, '').replace(/\s+/g, ' ')
   const history = context.history || (context.lastId ? [context.lastId] : [])
   const lastId = history.length ? history[history.length - 1] : null
 
-  // 0a. Back-reference handling — "go back to that AI project"
+  // 0a. Back-reference handling
   if (BACKREFERENCE_PHRASES.some((p) => normalized.includes(p))) {
     const resolved = resolveBackreference(normalized, history)
     if (resolved === 'ambiguous') {
@@ -396,7 +382,7 @@ export function matchQuestion(input, context = {}) {
     }
   }
 
-  // 0b. Follow-up handling — "tell me more" about whatever we last discussed
+  // 0b. Follow-up handling
   if (lastId && FOLLOWUP_PHRASES.some((p) => normalized === p || (p.includes(' ') && normalized.includes(p)))) {
     const lastEntry = knowledgeBase.find((e) => e.id === lastId)
     if (lastEntry?.more) {
@@ -418,7 +404,7 @@ export function matchQuestion(input, context = {}) {
     }
   }
 
-  // 2. Weighted scoring across all keywords (multi-word phrases weigh more)
+  // 2. Weighted scoring across all keywords
   const inputTokensStemmed = tokenize(normalized).map(stem)
   let bestMatch = null
   let highestScore = 0
@@ -435,7 +421,7 @@ export function matchQuestion(input, context = {}) {
     return { response: bestMatch.response, action: bestMatch.action || null, id: bestMatch.id }
   }
 
-  // 3. Fuzzy fallback — catch typos before giving up entirely
+  // 3. Fuzzy fallback
   const inputTokens = tokenize(normalized)
   let fuzzyBest = null
   let fuzzyBestScore = 0
@@ -443,7 +429,7 @@ export function matchQuestion(input, context = {}) {
   for (const entry of knowledgeBase) {
     let score = 0
     for (const keyword of entry.keywords) {
-      if (keyword.includes(' ')) continue // skip multi-word phrases for fuzzy pass
+      if (keyword.includes(' ')) continue 
       for (const token of inputTokens) {
         if (token.length < 4) continue
         const dist = levenshtein(token, keyword)
@@ -462,7 +448,7 @@ export function matchQuestion(input, context = {}) {
     return { response: fuzzyBest.response, action: fuzzyBest.action || null, id: fuzzyBest.id }
   }
 
-  // 4. True fallback — nothing matched, log it so it's visible later
+  // 4. True fallback
   logUnmatchedQuery(input)
   return { ...fallbackResponse, id: null }
 }
