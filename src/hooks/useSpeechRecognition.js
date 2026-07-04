@@ -53,6 +53,10 @@ export function useSpeechRecognition({ lang = 'en-US', onFinalResult } = {}) {
       if (final.trim()) {
         onFinalResult?.(final.trim())
         setInterimTranscript('')
+        // Some browsers don't reliably auto-close the mic right after a final
+        // result even with continuous=false — stop explicitly so it doesn't
+        // appear to hang open ("still listening") for a few extra seconds.
+        recognition.stop()
       }
     }
 

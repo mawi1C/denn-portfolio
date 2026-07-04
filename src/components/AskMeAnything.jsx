@@ -178,7 +178,7 @@ export default function AskMeAnything() {
             <MicButton
               onResult={(transcript) => {
                 setInput(transcript)
-                inputRef.current?.focus()
+                setTimeout(() => executeQuery(transcript), 350)
               }}
             />
           </form>
