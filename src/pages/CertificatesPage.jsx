@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft, ChevronDown, Award, GraduationCap, Trophy, Briefcase, Maximize2 } from 'lucide-react'
+import { ArrowLeft, ChevronDown, Award, GraduationCap, Trophy, Briefcase, Maximize2, BadgeCheck, ExternalLink } from 'lucide-react'
 
 // 1. IMPORT YOUR CERTIFICATE IMAGES HERE
 import bitscon from '../assets/bitscon-2023.png'
@@ -10,6 +10,7 @@ import programmingChallenge from '../assets/programming-challenge.png'
 import deansListSem2_2425 from '../assets/deans-list-2nd-2024-2025.jpg'
 import deansListSem1_2324 from '../assets/deans-list-1st-2023-2024.jpg'
 import deansListSem1_2425 from '../assets/deans-list-1st-2024-2025.jpg'
+import icipOpswat from '../assets/icip-opswat.png'
 
 // Add more certificates here as you earn them
 const certificates = [
@@ -76,11 +77,22 @@ const certificates = [
       'For actively participating in the Bicol IT Students Congress (BITSCON) 2023, themed "Transforming Education in Bicol Region: Exploring Emerging Trends Towards ASEAN Connectivity 2025."',
     image: bitscon,
   },
+  {
+    title: 'Introduction to Critical Infrastructure Protection (ICIP)',
+    issuer: 'OPSWAT Academy',
+    date: 'Jul 18, 2026',
+    category: 'Certification',
+    description:
+      'Completed the standards and requirements of the Introduction to CIP program, earning 0.50 CPE credits. Certificate ID: I2HTkhCQ-g. Valid through Jul 18, 2027.',
+    image: icipOpswat,
+    verifyUrl: 'https://learn.opswatacademy.com/certificate/I2HTkhCQ-g',
+  },
 ]
 
 const categoryMeta = {
   Conference: { icon: Award, label: 'Conference' },
   Internship: { icon: Briefcase, label: 'Internship' },
+  Certification: { icon: BadgeCheck, label: 'Certification' },
   Academic: { icon: GraduationCap, label: 'Academic' },
   Competition: { icon: Trophy, label: 'Competition' },
 }
@@ -175,8 +187,8 @@ export default function CertificatesPage() {
 
                               {/* Clickable Image Link */}
                               <div className="md:w-1/2 shrink-0">
-                                <a
-                                  href={cert.image}
+
+                                <a href={cert.image}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   data-cursor="zoom" /* <-- ADD THIS */
@@ -206,6 +218,17 @@ export default function CertificatesPage() {
                                 <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
                                   {cert.description}
                                 </p>
+                                {cert.verifyUrl && (
+
+                                  <a href={cert.verifyUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1.5 text-xs font-mono text-blue-600 dark:text-blue-400 hover:underline mt-3 w-fit"
+                                  >
+                                    <ExternalLink size={12} />
+                                    verify certificate
+                                  </a>
+                                )}
                               </div>
 
                             </div>

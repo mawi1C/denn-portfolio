@@ -7,10 +7,9 @@ html, body {
   width: 100%;
 }
 
-/* Hide default cursor on desktop devices so the custom one shows */
 @media (min-width: 768px) {
   * {
-    cursor: none !important;
+    cursor: auto;
   }
 }
 

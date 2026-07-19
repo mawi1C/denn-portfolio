@@ -1,7 +1,6 @@
 import { useLocation } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import BinaryPattern from './BinaryPattern'
-import CustomCursor from '../components/CustomCursor'
 
 export default function Layout({ children }) {
   const location = useLocation()
@@ -9,9 +8,6 @@ export default function Layout({ children }) {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors">
-      
-      {/* Global Custom Cursor */}
-      <CustomCursor />
 
       {/* Fixed, top-right decorative layer */}
       {isHome && <BinaryPattern />}
